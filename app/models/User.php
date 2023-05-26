@@ -35,7 +35,7 @@
       }else{
         return false;
       }
-    }
+    } 
 
     // Find user by email
     public function findUserByEmail($email){
