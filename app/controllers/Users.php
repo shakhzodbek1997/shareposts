@@ -117,10 +117,28 @@
           $data['password_err'] = 'Please enter password';
         }
 
+        // Check for user/email
+        if($this->userModel->findUserByEmail($data['email'])){
+          // User Found
+        
+        }else{
+          // User Not Found  
+          $data['email_err'] = 'No User Found';
+        }
+
         // Make sure errors are empty
         if(empty($data['email_err']) && empty($data['password_err'])){
           // Validated
-          die('SUCCESS');
+          // Check and set Logged in user
+          $loggedInUSer = $this->userModel->login($data['email'], $data['password']);//un hashing password4
+
+          if($loggedInUSer){
+            // Create Session 
+            die('Success');
+          }else{
+            $data['password_err'] = 'Password in correct';
+            $this->view('users/login', $data);
+          }
         } else {
           // Load view with errors
           $this->view('users/login', $data);
